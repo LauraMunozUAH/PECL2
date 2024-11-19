@@ -3,19 +3,20 @@ CREATE DATABASE PECL2;
 CREATE TYPE SEXO AS ENUM ('M', 'U', 'F');
 
 CREATE TABLE IF NOT EXISTS Persona(
-    person_id           CHAR(32),
+    person_id           CHAR(32) NOT NULL,
     person_sex          SEXO,
-    person_lastname     VARCHAR(20),
-    person_firstname    VARCHAR(20),
-    person_phone        VARCHAR(30),
-    person_address      VARCHAR(100),
-    person_city         VARCHAR(15),
-    person_state        VARCHAR(15),
-    person_zip          INT,
-    person_ssn          CHAR(11),
-    person_dob          DATE,
+    person_lastname     VARCHAR(20) NOT NULL,
+    person_firstname    VARCHAR(20) NOT NULL,
+    person_phone        VARCHAR(30) NOT NULL,
+    person_address      VARCHAR(100) NOT NULL,
+    person_city         VARCHAR(15) NOT NULL,
+    person_state        VARCHAR(15) NOT NULL,
+    person_zip          INT NOT NULL,
+    person_ssn          CHAR(11) NOT NULL,
+    person_dob          DATE NOT NULL,
     CONSTRAINT Persona_pk PRIMARY KEY (person_id)
 );
+SELECT person_dob FROM "personas2" WHERE  person_dob IS NULL;
 
 
 CREATE TYPE COORDENADAS AS (
@@ -24,10 +25,9 @@ CREATE TYPE COORDENADAS AS (
 );
 
 CREATE TABLE IF NOT EXISTS Accidentes(
-    unique_id                       INT,
-    collision_id                    INT,
-    crash_date                      DATE,
-    crash_time                      TIME,
+    collision_id                    INT NOT NULL ,
+    crash_date                      DATE NOT NULL ,
+    crash_time                      TIME NOT NULL ,
     borough                         VARCHAR(20),
     zip_code                        INT,
     latitude                        DOUBLE PRECISION,
@@ -49,8 +49,9 @@ CREATE TABLE IF NOT EXISTS Accidentes(
     contributing_factor_vehicle3    VARCHAR(50),
     contributing_factor_vehicle4    VARCHAR(50),
     contributing_factor_vehicle5    VARCHAR(50),
-    CONSTRAINT Accidentes_pk PRIMARY KEY (unique_id)
+    CONSTRAINT Accidentes_pk PRIMARY KEY (collision_id)
 );
+
 
 
 CREATE TABLE IF NOT EXISTS Vehiculos(
@@ -62,13 +63,13 @@ CREATE TABLE IF NOT EXISTS Vehiculos(
     vehicle_year        INT,
     CONSTRAINT Vehiculo_pk PRIMARY KEY (vehicle_id)
 );
-SELECT vehicle_id FROM "Vehicles" WHERE vehicle_id IS NULL;
+
 
 CREATE TYPE TYPE_PERSON AS ENUM ('Occupant', 'Pedestrian', 'Bicyclist', 'Other Motorized');
 CREATE TYPE INJURY_PERSON AS ENUM ('Unspecified', 'Injured', 'Killed');
 CREATE TYPE EJECTION AS ENUM ('Not Ejected', 'Ejected', 'Partially Ejected', 'Trapped', 'Does Not Apply', 'Unknown');
 CREATE TYPE EMOTIONAL_STATUS AS ENUM ('Conscious', 'Does Not Apply', 'Shock', 'Unknown', 'Semiconscious', 'Apparent Death', 'Incoherent', 'Unconscious');
-CREATE TYPE PED_ROLE AS ENUM('Driver', 'Passenger', 'Notified Person', 'Registrant', 'Witness', 'Owner', 'Other', 'Pedestrian', 'In-Line Skater', 'Policy Holder');
+CREATE TYPE PED_ROLE AS ENUM('Driver', 'Passenger', 'Notified Person', 'Registrant', 'Witness','Owner', 'Other', 'Pedestrian', 'In-Line Skater', 'Policy Holder');
 
 CREATE TABLE IF NOT EXISTS Colision_personas(
     unique_id               INT NOT NULL ,
