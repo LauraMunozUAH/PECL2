@@ -13,10 +13,8 @@ CREATE TABLE IF NOT EXISTS Persona(
     person_state        VARCHAR(15) NOT NULL,
     person_zip          INT NOT NULL,
     person_ssn          CHAR(11) NOT NULL,
-    person_dob          DATE NOT NULL,
-    CONSTRAINT Persona_pk PRIMARY KEY (person_id)
+    person_dob          DATE NOT NULL
 );
-SELECT person_dob FROM "personas2" WHERE  person_dob IS NULL;
 
 
 CREATE TYPE COORDENADAS AS (
@@ -48,8 +46,7 @@ CREATE TABLE IF NOT EXISTS Accidentes(
     contributing_factor_vehicle2    VARCHAR(50),
     contributing_factor_vehicle3    VARCHAR(50),
     contributing_factor_vehicle4    VARCHAR(50),
-    contributing_factor_vehicle5    VARCHAR(50),
-    CONSTRAINT Accidentes_pk PRIMARY KEY (collision_id)
+    contributing_factor_vehicle5    VARCHAR(50)
 );
 
 
@@ -60,9 +57,9 @@ CREATE TABLE IF NOT EXISTS Vehiculos(
     vehicle_type        VARCHAR(40),
     vehicle_make        VARCHAR(40),
     vehicle_model       VARCHAR(20),
-    vehicle_year        INT,
-    CONSTRAINT Vehiculo_pk PRIMARY KEY (vehicle_id)
+    vehicle_year        INT
 );
+
 
 
 CREATE TYPE TYPE_PERSON AS ENUM ('Occupant', 'Pedestrian', 'Bicyclist', 'Other Motorized');
@@ -80,7 +77,7 @@ CREATE TABLE IF NOT EXISTS Colision_personas(
     person_age              INT,
     ejection                EJECTION,
     emotional_status        EMOTIONAL_STATUS,
-    bodily_injury           VARCHAR(40),
+    bodily_injury           VARCHAR(30),
     position_in_vehicle     VARCHAR(100),
     safety_equipment        VARCHAR(40),
     ped_location            VARCHAR(100),
@@ -89,27 +86,27 @@ CREATE TABLE IF NOT EXISTS Colision_personas(
     ped_role                PED_ROLE,
     contributing_factor_1   VARCHAR(50),
     contributing_factor_2   VARCHAR(50),
-    person_sex              SEXO,
-    CONSTRAINT Colision_personas_pk PRIMARY KEY (unique_id)
+    person_sex              SEXO
 );
 
+CREATE TYPE DRIVER_LICENSE_STATUS AS ENUM('Licensed', 'Permit', 'Unlicensed');
+CREATE TYPE PUBLIC_PROPERTY_DAMAGE AS ENUM('N', 'Y', 'Unspecified');
 
 CREATE TABLE IF NOT EXISTS Colision_vehiculos(
-  vehicle_id                    INT,
-  travel_direction              TEXT,
-  vehicle_occupants             SEXO,
-  driver_sex                    TEXT,
-  driver_license_status         TEXT,
-  driver_license_jurisdiction   TEXT,
-  pre_crash                     TEXT,
-  point_of_impact               TEXT,
-  vehicle_damage                TEXT,
-  vehicle_damage_1              TEXT,
-  vehicle_damage_2              TEXT,
-  vehicle_damage_3              TEXT,
-  public_property_damage        TEXT,
-  public_property_damage_type   TEXT,
-  contributing_factor_1         TEXT,
-  contributing_factor_2         TEXT
+  vehicle_id                    INT NOT NULL ,
+  travel_direction              varchar(50),
+  vehicle_occupants             INT,
+  driver_sex                    SEXO,
+  driver_license_status         DRIVER_LICENSE_STATUS,
+  driver_license_jurisdiction   varchar(10),
+  pre_crash                     varchar(100),
+  point_of_impact               varchar(50),
+  vehicle_damage                varchar(50),
+  vehicle_damage_1              varchar(50),
+  vehicle_damage_2              varchar(50),
+  vehicle_damage_3              varchar(50),
+  public_property_damage        PUBLIC_PROPERTY_DAMAGE,
+  public_property_damage_type   varchar(100),
+  contributing_factor_1         varchar(80),
+  contributing_factor_2         varchar(80)
 );
-
